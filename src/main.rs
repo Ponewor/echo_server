@@ -15,10 +15,10 @@ async fn handle_connection(mut socket: TcpStream) {
                 return;
             }
         };
-        socket.write_all(&buf[0..n]).await.unwrap_or_else(|e| {
+        if let Err(e) = socket.write_all(&buf[..n]).await {
             eprintln!("error writing to socket, {}", e);
             return;
-        })
+        }
     }
 }
 
